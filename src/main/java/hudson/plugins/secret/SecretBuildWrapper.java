@@ -30,7 +30,10 @@ public class SecretBuildWrapper extends BuildWrapper {
     }
 
     public @Override Environment setUp(AbstractBuild build, Launcher launcher, BuildListener listener) throws IOException, InterruptedException {
-        final FilePath secret = build.getBuiltOn().getRootPath().child("secrets").child(UUID.randomUUID().toString());
+        FilePath secrets = build.getBuiltOn().getRootPath().child("secrets");
+        secrets.mkdirs();
+        secrets.chmod(/*0700*/448);
+        final FilePath secret = secrets.child(UUID.randomUUID().toString());
         secret.unzipFrom(new FileInputStream(new File(build.getProject().getRootDir(), "secret.zip")));
         return new Environment() {
             public @Override void buildEnvVars(Map<String,String> env) {
@@ -65,12 +68,16 @@ public class SecretBuildWrapper extends BuildWrapper {
                             if (data.length < 4 || data[0] != 'P' || data[1] != 'K' || data[2] != 3 || data[3] != 4) {
                                 throw new FormException("Not a ZIP file", "secret.file");
                             }
-                            OutputStream os = new FileOutputStream(new File(prj.getRootDir(), "secret.zip"));
+                            File secretZip = new File(prj.getRootDir(), "secret.zip");
+                            OutputStream os = new FileOutputStream(secretZip);
                             try {
                                 os.write(data);
                             } finally {
                                 os.close();
                             }
+                            // Hudson.getInstance().createPath(secretZip.getAbsolutePath()).chmod(/*0600*/384);
+                            secretZip.setReadable(false, false); // seems to be necessary, not sure why...
+                            secretZip.setReadable(true, true);
                         } else {
                             // apparently if the file is omitted, we get a zero-length file, so this is normal
                         }
