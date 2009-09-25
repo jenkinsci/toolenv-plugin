@@ -7,6 +7,7 @@ import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
 import hudson.model.Hudson;
+import hudson.security.Permission;
 import hudson.tasks.BuildWrapper;
 import hudson.tasks.BuildWrapperDescriptor;
 import java.io.File;
@@ -19,9 +20,9 @@ import java.util.UUID;
 import javax.servlet.ServletException;
 import org.apache.commons.fileupload.FileItem;
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.HttpRedirect;
-import org.kohsuke.stapler.HttpResponse;
+import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerResponse;
 
 public class SecretBuildWrapper extends BuildWrapper {
 
@@ -48,42 +49,6 @@ public class SecretBuildWrapper extends BuildWrapper {
         };
     }
 
-    public HttpResponse doUpload(StaplerRequest req) throws IOException, ServletException {
-        // XXX rewrite and look at PluginManager.doUploadPlugin for an example
-        try {
-            Object _projectName = req.getSubmittedForm().get("name");
-            if (_projectName instanceof String) {
-                AbstractProject prj = (AbstractProject) Hudson.getInstance().getItem((String) _projectName);
-                FileItem file = req.getFileItem("secret.file");
-                if (file != null) {
-                    byte[] data = file.get();
-                    if (data.length > 0) {
-                        if (data.length < 4 || data[0] != 'P' || data[1] != 'K' || data[2] != 3 || data[3] != 4) {
-                            throw new ServletException("Not a ZIP file");
-                        }
-                        File secretZip = new File(prj.getRootDir(), "secret.zip");
-                        OutputStream os = new FileOutputStream(secretZip);
-                        try {
-                            os.write(data);
-                        } finally {
-                            os.close();
-                        }
-                        // Hudson.getInstance().createPath(secretZip.getAbsolutePath()).chmod(/*0600*/384);
-                        secretZip.setReadable(false, false); // seems to be necessary, not sure why...
-                        secretZip.setReadable(true, true);
-                    } else {
-                        // apparently if the file is omitted, we get a zero-length file, so this is normal
-                    }
-                }
-            }
-        } catch (ServletException x) {
-            throw x;
-        } catch (Exception x) {
-            throw new ServletException(x);
-        }
-        return new HttpRedirect("???");
-    }
-
     @Extension public static class Descriptor extends BuildWrapperDescriptor {
 
         public boolean isApplicable(AbstractProject item) {
@@ -92,6 +57,37 @@ public class SecretBuildWrapper extends BuildWrapper {
 
         public @Override String getDisplayName() {
             return "Build Secret";
+        }
+
+        // XXX why doesn't /startUpload/ work automatically? Stapler diagnostics page claims it will...
+        public void doStartUpload(StaplerRequest req, StaplerResponse rsp) throws IOException, ServletException {
+            req.getView(SecretBuildWrapper.class, "startUpload.jelly").forward(req, rsp);
+        }
+
+        public void doUpload(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job) throws IOException, ServletException {
+            AbstractProject prj = (AbstractProject) Hudson.getInstance().getItem(job);
+            prj.checkPermission(Permission.CONFIGURE);
+            FileItem file = req.getFileItem("secret.file");
+            if (file == null) {
+                throw new ServletException("no file upload");
+            }
+            byte[] data = file.get();
+            if (data.length < 4 || data[0] != 'P' || data[1] != 'K' || data[2] != 3 || data[3] != 4) {
+                // XXX more polite error page would be preferable
+                throw new ServletException("not a ZIP file");
+            }
+            File secretZip = new File(prj.getRootDir(), "secret.zip");
+            OutputStream os = new FileOutputStream(secretZip);
+            try {
+                os.write(data);
+            } finally {
+                os.close();
+            }
+            // Hudson.getInstance().createPath(secretZip.getAbsolutePath()).chmod(/*0600*/384);
+            secretZip.setReadable(false, false); // seems to be necessary, not sure why...
+            secretZip.setReadable(true, true);
+            rsp.setContentType("text/html");
+            rsp.getWriter().println("Uploaded secret ZIP of length " + data.length + ".");
         }
 
     }
