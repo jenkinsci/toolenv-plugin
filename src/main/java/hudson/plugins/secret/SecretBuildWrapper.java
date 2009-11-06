@@ -83,9 +83,11 @@ public class SecretBuildWrapper extends BuildWrapper {
             } finally {
                 os.close();
             }
-            // Hudson.getInstance().createPath(secretZip.getAbsolutePath()).chmod(/*0600*/384);
-            secretZip.setReadable(false, false); // seems to be necessary, not sure why...
-            secretZip.setReadable(true, true);
+            try {
+                Hudson.getInstance().createPath(secretZip.getAbsolutePath()).chmod(/*0600*/384);
+            } catch (InterruptedException x) {
+                throw (IOException) new IOException(x.toString()).initCause(x);
+            }
             rsp.setContentType("text/html");
             rsp.getWriter().println("Uploaded secret ZIP of length " + data.length + ".");
         }
