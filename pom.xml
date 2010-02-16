@@ -3,15 +3,15 @@
     <parent>
         <groupId>org.jvnet.hudson.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>1.324</version>
+        <version>1.346</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>secret</artifactId>
-    <version>1.5-SNAPSHOT</version>
+    <artifactId>toolenv</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>hpi</packaging>
-    <name>Build Secret plugin</name>
-    <description>Lets you upload secret files to be used by a build.</description>
-    <url>http://wiki.hudson-ci.org/display/HUDSON/Build+Secret+Plugin</url>
+    <name>Tool Environment plugin</name>
+    <description>Lets you use "tools" in unusual ways, such as from shell scripts.</description>
+    <url>http://wiki.hudson-ci.org/display/HUDSON/Tool+Environment+Plugin</url>
     <developers>
         <developer>
             <id>jglick</id>

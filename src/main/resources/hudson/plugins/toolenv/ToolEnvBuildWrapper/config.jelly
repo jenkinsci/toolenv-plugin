@@ -1,0 +1,17 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+    <f:entry field="vars">
+        Select the environment variables you wish to define:
+        <j:invokeStatic var="names" className="hudson.plugins.toolenv.ToolEnvBuildWrapper" method="availableVariableNames"/>
+        <j:forEach var="v" items="${names}">
+            <br/>
+            <input type="checkbox"
+                 onclick="
+                 var f = document.getElementById('vars.field');
+                 var o = f.value;
+                 f.value = this.checked ? (o ? o + ',${v}' : '${v}') : o.replace(/,${v}/, '').replace(/^${v},?/, '')"
+                 checked="${instance['vars'].contains(v) ? 'true' : null}"/>
+                 <code>${v}</code>
+        </j:forEach>
+        <input type="hidden" name="_.vars" id='vars.field' value="${instance['vars']}"/>
+    </f:entry>
+</j:jelly>
