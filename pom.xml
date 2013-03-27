@@ -6,7 +6,7 @@
         <version>1.466</version>
     </parent>
     <artifactId>toolenv</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <packaging>hpi</packaging>
     <name>Tool Environment plugin</name>
     <description>Lets you use "tools" in unusual ways, such as from shell scripts.</description>
