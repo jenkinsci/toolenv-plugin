@@ -1,10 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.jvnet.hudson.plugins</groupId>
+        <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>1.346</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>1.466</version>
     </parent>
     <artifactId>toolenv</artifactId>
     <version>1.1-SNAPSHOT</version>
@@ -16,15 +15,20 @@
         <developer>
             <id>jglick</id>
             <name>Jesse Glick</name>
-            <email>jglick@dev.java.net</email>
+            <email>jglick@cloudbees.com</email>
         </developer>
     </developers>
+    <scm>
+        <connection>scm:git:git://github.com/jenkinsci/toolenv-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:jenkinsci/toolenv-plugin.git</developerConnection>
+        <url>https://github.com/jenkinsci/toolenv-plugin</url>
+    </scm>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>animal-sniffer-maven-plugin</artifactId>
-                <version>1.6</version>
+                <version>1.9</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -43,14 +47,12 @@
             </plugin>
         </plugins>
     </build>
-
     <repositories>
         <repository>
             <id>repo.jenkins-ci.org</id>
             <url>http://repo.jenkins-ci.org/public/</url>
         </repository>
     </repositories>
-
     <pluginRepositories>
         <pluginRepository>
             <id>repo.jenkins-ci.org</id>
@@ -58,5 +60,3 @@
         </pluginRepository>
     </pluginRepositories>
 </project>  
-  
-
