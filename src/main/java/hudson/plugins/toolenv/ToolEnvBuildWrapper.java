@@ -65,7 +65,10 @@ public class ToolEnvBuildWrapper extends BuildWrapper {
         Map<String,ToolInstallation> r = new TreeMap<String,ToolInstallation>();
         for (ToolDescriptor<?> desc : ToolInstallation.all()) {
             for (ToolInstallation inst : desc.getInstallations()) {
-                r.put(inst.getName().replaceAll("[^a-zA-Z0-9_]+", "_").toUpperCase(Locale.ENGLISH) + "_HOME", inst);
+                String instName = inst.getName();
+                if (instName != null) {
+                    r.put(instName.replaceAll("[^a-zA-Z0-9_]+", "_").toUpperCase(Locale.ENGLISH) + "_HOME", inst);
+                }
             }
         }
         return r;
