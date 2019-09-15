@@ -67,6 +67,7 @@ public class ToolEnvBuildWrapper extends BuildWrapper {
             for (ToolInstallation inst : desc.getInstallations()) {
                 String instName = inst.getName();
                 if (instName != null) {
+                    // some instalations return null instead of empty string
                     r.put(instName.replaceAll("[^a-zA-Z0-9_]+", "_").toUpperCase(Locale.ENGLISH) + "_HOME", inst);
                 }
             }
