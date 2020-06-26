@@ -8,7 +8,6 @@ link:https://github.com/jenkinsci/toolenv-plugin/graphs/contributors[image:https
 link:https://github.com/jenkinsci/toolenv-plugin/releases/latest[image:https://img.shields.io/github/release/jenkinsci/toolenv-plugin.svg?label=changelog[GitHub release]]
 link:https://plugins.jenkins.io/toolenv[image:https://img.shields.io/jenkins/plugin/i/toolenv.svg?color=blue&label=installations[Jenkins Plugin Installs]]
 
-[#introduction]
 == Introduction
 
 Tool environment plugin lets you use "tools" in unusual ways, such as from shell scripts.
@@ -17,12 +16,12 @@ See http://issues.jenkins-ci.org/browse/JENKINS-4532[JENKINS-4532] for motivatio
 
 Some screenshots are better than a long discussion:
 
-. This is what you define in Hudson's main config screen: +
-[.confluence-embedded-file-wrapper .image-center-wrapper]#image:docs/images/toolenv-01.png[image]#
+. This is what you define in the Jenkins configuration screen: +
+image:docs/images/toolenv-01.png[Jenkins configuration screen]
 . This is how you use the plugin in a job: +
-[.confluence-embedded-file-wrapper .image-center-wrapper]#image:docs/images/toolenv-02.png[image]#
+image:docs/images/toolenv-02.png[Jenkins job configuration screen]
 . This is what you get: +
-[.confluence-embedded-file-wrapper .image-center-wrapper]#image:docs/images/toolenv-03.png[image]#
+image:docs/images/toolenv-03.png[Jenkins console output]
 
 Compared to
 https://plugins.jenkins.io/custom-tools-plugin/[Custom Tools
@@ -32,7 +31,6 @@ should be merged.
 https://plugins.jenkins.io/shared-objects/[SharedObjects
 Plugin] can also be used to achieve this plugin's effect.
 
-[#release-notes]
 == Release notes
 
 See https://github.com/jenkinsci/toolenv-plugin/releases[GitHub Release] for more recent versions.
