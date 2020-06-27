@@ -26,10 +26,7 @@ image:docs/images/toolenv-03.png[Jenkins console output]
 Compared to
 https://plugins.jenkins.io/custom-tools-plugin/[Custom Tools
 Plugin] the advantage is that you can use the tool in arbitrary ways,
-not just running an executable from it. In the future these plugins
-should be merged.
-https://plugins.jenkins.io/shared-objects/[SharedObjects
-Plugin] can also be used to achieve this plugin's effect.
+not just running an executable from it.
 
 == Release notes
 
