@@ -13,9 +13,8 @@
     <url>https://github.com/jenkinsci/toolenv-plugin</url>
     <developers>
         <developer>
-            <id>jglick</id>
-            <name>Jesse Glick</name>
-            <email>jglick@cloudbees.com</email>
+            <id>skundrik</id>
+            <name>Slavomir Kundrik</name>
         </developer>
     </developers>
     <scm>
