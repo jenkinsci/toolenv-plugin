@@ -10,7 +10,7 @@
     <packaging>hpi</packaging>
     <name>Tool Environment plugin</name>
     <description>Lets you use "tools" in unusual ways, such as from shell scripts.</description>
-    <url>https://wiki.jenkins-ci.org/display/JENKINS/Tool+Environment+Plugin</url>
+    <url>https://github.com/jenkinsci/toolenv-plugin</url>
     <developers>
         <developer>
             <id>jglick</id>
