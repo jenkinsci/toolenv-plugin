@@ -3,11 +3,7 @@ package hudson.plugins.toolenv;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.Launcher;
-import hudson.model.AbstractBuild;
-import hudson.model.AbstractProject;
-import hudson.model.BuildListener;
-import hudson.model.Computer;
-import hudson.model.EnvironmentSpecific;
+import hudson.model.*;
 import hudson.slaves.NodeSpecific;
 import hudson.tasks.BuildWrapper;
 import hudson.tasks.BuildWrapperDescriptor;
@@ -43,7 +39,12 @@ public class ToolEnvBuildWrapper extends BuildWrapper {
                     }
                     if (tool instanceof NodeSpecific) {
                         try {
-                            tool = (ToolInstallation) ((NodeSpecific<?>) tool).forNode(Computer.currentComputer().getNode(), listener);
+                            Node node = Computer.currentComputer().getNode();
+                            if (node == null) {
+                                listener.error("Could not install " + var + ". Node is null.");
+                                continue;
+                            }
+                            tool = (ToolInstallation) ((NodeSpecific<?>) tool).forNode(node, listener);
                         } catch (Exception x) {
                             x.printStackTrace(listener.error("Could not install " + var));
                             continue;
