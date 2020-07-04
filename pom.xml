@@ -6,7 +6,7 @@
         <version>2.15</version>
     </parent>
     <artifactId>toolenv</artifactId>
-    <version>1.2</version>
+    <version>1.3-SNAPSHOT</version>
     <packaging>hpi</packaging>
     <name>Tool Environment plugin</name>
     <description>Lets you use "tools" in unusual ways, such as from shell scripts.</description>
@@ -21,7 +21,7 @@
         <connection>scm:git:git://github.com/jenkinsci/toolenv-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:jenkinsci/toolenv-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/toolenv-plugin</url>
-      <tag>toolenv-1.2</tag>
+      <tag>HEAD</tag>
   </scm>
     <build>
         <plugins>
