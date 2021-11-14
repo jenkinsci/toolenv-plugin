@@ -44,7 +44,12 @@ public class ToolEnvBuildWrapper extends BuildWrapper {
                     }
                     if (tool instanceof NodeSpecific) {
                         try {
-                            Node node = Computer.currentComputer().getNode();
+                            Computer computer = Computer.currentComputer();
+                            if (computer == null) {
+                                listener.error("Could not install " + var + ". Computer is null.");
+                                continue;
+                            }
+                            Node node = computer.getNode();
                             if (node == null) {
                                 listener.error("Could not install " + var + ". Node is null.");
                                 continue;
