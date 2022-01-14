@@ -5,30 +5,38 @@
         <artifactId>plugin</artifactId>
         <version>4.33</version>
     </parent>
+
     <artifactId>toolenv</artifactId>
     <version>1.3-SNAPSHOT</version>
     <packaging>hpi</packaging>
     <name>Tool Environment plugin</name>
     <description>Lets you use "tools" in unusual ways, such as from shell scripts.</description>
     <url>https://github.com/jenkinsci/toolenv-plugin</url>
+
     <developers>
         <developer>
             <id>skundrik</id>
             <name>Slavomir Kundrik</name>
         </developer>
     </developers>
+
     <scm>
         <connection>scm:git:git://github.com/jenkinsci/toolenv-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:jenkinsci/toolenv-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/toolenv-plugin</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
+
+    <properties>
+        <java.level>8</java.level>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>animal-sniffer-maven-plugin</artifactId>
-                <version>1.13</version>
+                <version>1.20</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -47,16 +55,19 @@
             </plugin>
         </plugins>
     </build>
+
     <repositories>
         <repository>
             <id>repo.jenkins-ci.org</id>
             <url>https://repo.jenkins-ci.org/public/</url>
         </repository>
     </repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>repo.jenkins-ci.org</id>
             <url>https://repo.jenkins-ci.org/public/</url>
         </pluginRepository>
     </pluginRepositories>
+
 </project>  
